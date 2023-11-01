@@ -6,8 +6,12 @@ module.exports = {
       colors: {
         transparent: "transparent",
         current: "currentColor",
-        bg: "#1e1e1e"
-      }
+        background: "#121212",
+        primary: "#7C3AED"
+      },
+      backgroundImage: {
+        'noisy-texture': 'url("assets/background_noisy.png")'
+      },
     },
   },
   plugins: [],
