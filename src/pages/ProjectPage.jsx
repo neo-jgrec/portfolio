@@ -87,6 +87,13 @@ function ProjectPage() {
                 {...rest} />
             );
           },
+          a(props) {
+            const {...rest} = props;
+            return (
+              <a className='text-blue-500 hover:underline'
+                {...rest} />
+            );
+          }
         }}
       />
     </Layout>
