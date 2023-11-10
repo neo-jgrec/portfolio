@@ -15,7 +15,7 @@ function Header() {
       <div className="flex items-center justify-between w-full max-w-6xl px-4 mx-auto md:px-8">
         <div className="flex items-center p-2">
           <a className="flex items-center gap-x-2 transition-colors" href="/" style={{ marginTop: "-3px" }}>
-            <img className="w-8 h-8" src="ProfilePic.png" alt="neo-jgrec-profile" />
+            <img className="w-8 h-8" src="/ProfilePic.png" alt="neo-jgrec-profile" />
             <p className="text-2xl font-bold text-gray-200 hidden sm:block">Jean-Yanis JEFFROY</p>
           </a>
         </div>
