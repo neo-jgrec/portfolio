@@ -15,3 +15,8 @@ code {
   font-family: 'Poppins', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.markdown > * {
+  all: revert;
+  color: #fff;
+}

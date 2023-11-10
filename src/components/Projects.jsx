@@ -50,7 +50,7 @@ function ProjectCard({ project }) {
     return null;
 
   return (
-    <div className="p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out aspect-w-2 aspect-h-1">
+    <a className="p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out aspect-w-2 aspect-h-1" href={'/project/' + project.dataName}>
 
       <div className="h-full w-full flex flex-col justify-between">
         <div className="grid grid-cols-3 items-center">
@@ -105,7 +105,7 @@ function ProjectCard({ project }) {
           ))}
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 

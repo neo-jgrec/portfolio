@@ -3,18 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^7.1.0",
     "@heroicons/react": "^2.0.18",
+    "@material-tailwind/react": "^2.1.2",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "install": "^0.13.0",
-    "npm": "^9.8.1",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.54",
+    "@types/react": "^18.2.22",
+    "@types/react-dom": "^18.2.7",
+    "@vercel/analytics": "^1.0.2",
+    "autoprefixer": "^10.4.16",
+    "axios": "^1.5.1",
+    "eslint": "^8.50.0",
+    "fs": "^0.0.1-security",
+    "marked": "^9.0.3",
+    "marked-react": "^2.0.0",
+    "postcss-cli": "^10.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-markdown": "^9.0.0",
-    "react-router-dom": "^6.14.2",
+    "react-markdown": "^8.0.7",
+    "react-router-dom": "^6.16.0",
     "react-scripts": "5.0.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype-raw": "^6.1.1",
+    "remark-gfm": "^3.0.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -41,7 +56,12 @@
       "last 1 safari version"
     ]
   },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "devDependencies": {
-    "tailwindcss": "^3.3.3"
+    "@types/react-syntax-highlighter": "^15.5.7"
   }
 }
