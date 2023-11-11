@@ -117,10 +117,15 @@ function ProjectPage() {
           },
           img(props) {
             const {...rest} = props;
-            return (
-              <div className='w-full h-full p-5'>
-                <img className='w-full h-full rounded' {...rest} alt={props.alt} />
-              </div>
+            if (props.alt === 'RepoCard')
+              return (
+                <img className='w-72' {...rest} alt={props.alt} />
+              );
+            else
+              return (
+                <div className='w-full h-full p-5'>
+                  <img className='w-full h-full rounded' {...rest} alt={props.alt} />
+                </div>
             );
           }
         }}
