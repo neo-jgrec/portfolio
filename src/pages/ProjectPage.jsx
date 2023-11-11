@@ -75,7 +75,7 @@ function ProjectPage() {
                 style={Theme}
               />
             ) : (
-              <code {...rest} className={className}>
+              <code {...rest} className={`${className} text-white bg-gray-800 rounded p-1`}>
                 {children}
               </code>
             )
@@ -129,7 +129,7 @@ function ProjectPage() {
       <br /> <br />
 
       <div className="flex flex-row justify-between items-center px-4 lg:px-52">
-        {contributors && contributors.map((contributor, index) => (
+        {contributors && contributors.length > 1 && contributors.map((contributor, index) => (
           <a
             key={index}
             className="flex flex-col items-center p-4"
