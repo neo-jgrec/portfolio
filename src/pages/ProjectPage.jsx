@@ -75,7 +75,7 @@ function ProjectPage() {
                 style={Theme}
               />
             ) : (
-              <code {...rest} className={`${className} text-white bg-gray-800 rounded p-1`}>
+              <code {...rest} className={`${className} text-white bg-gray-800 rounded p-1`} inline={children.toString()}>
                 {children}
               </code>
             )
