@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import projects from "../data/projects";
 import Layout from "./Layout";
 
@@ -10,9 +10,12 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import Theme from 'react-syntax-highlighter/dist/esm/styles/prism/one-dark';
 
 import logoGh from '../svg/github-mark-white.svg';
+import contributions from "../data/contributions";
 
 function ProjectPage() {
   const { projectName } = useParams();
+  const navigate = useNavigate();
+
   const [markdown, setMarkdown] = React.useState('');
   const [project, setProject] = React.useState(null);
   const [apiData, setApiData] = React.useState(null);
@@ -24,7 +27,11 @@ function ProjectPage() {
   }, [project]);
 
   React.useEffect(() => {
-    const project = Object.values(projects).find(project => project.dataName === projectName);
+    const project = Object.values(projects).find(project => project.dataName === projectName) || Object.values(contributions).find(project => project.name === projectName);
+
+    if (!project)
+      navigate('/');
+
     setProject(project);
   }, [projectName]);
 
