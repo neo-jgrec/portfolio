@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, NotFound, ProjectPage } from "../pages";
+import { AllProjects, Home, NotFound, ProjectPage } from "../pages";
 
 function Router() {
   return (
@@ -8,6 +8,7 @@ function Router() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/project/:projectName" element={<ProjectPage />} />
+        <Route path="/projects" element={<AllProjects />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
