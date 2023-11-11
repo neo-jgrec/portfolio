@@ -82,7 +82,7 @@ function ProjectCard({ project, setLoaded }) {
       <div className="h-full w-full flex flex-col justify-between">
         <div className="grid grid-cols-3 items-center">
           <div className="col-span-1 h-32 w-32">
-            <img src={'projects-data/' + project.dataName + '/image.png'} alt={project.name} className="w-full h-full rounded-lg object-cover" style={{ imageRendering: 'pixelated' }} />
+            <img src={'projects-data/' + project.dataName + '/image.png'} alt={project.name} className="w-full h-full rounded-lg object-contain" style={{ imageRendering: 'pixelated' }} />
           </div>
 
           <div className="col-span-2 flex flex-col justify-between">
