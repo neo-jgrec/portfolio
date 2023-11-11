@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import projects from "../data/projects";
 import Layout from "./Layout";
 
@@ -11,10 +11,10 @@ import Theme from 'react-syntax-highlighter/dist/esm/styles/prism/one-dark';
 
 import logoGh from '../svg/github-mark-white.svg';
 import contributions from "../data/contributions";
+import NotFound from "./NotFound";
 
 function ProjectPage() {
   const { projectName } = useParams();
-  const navigate = useNavigate();
 
   const [markdown, setMarkdown] = React.useState('');
   const [project, setProject] = React.useState(null);
@@ -28,10 +28,6 @@ function ProjectPage() {
 
   React.useEffect(() => {
     const project = Object.values(projects).find(project => project.dataName === projectName) || Object.values(contributions).find(project => project.name === projectName);
-
-    if (!project)
-      navigate('/');
-
     setProject(project);
   }, [projectName]);
 
@@ -71,7 +67,10 @@ function ProjectPage() {
     }
   }, [project]);
 
-  if (!project || !apiData || !contributors)
+  if (!project)
+    return <NotFound />;
+
+  if (!apiData || !contributors)
     return null;
 
   return (
