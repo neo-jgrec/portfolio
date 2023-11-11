@@ -110,8 +110,17 @@ function ProjectPage() {
           a(props) {
             const {...rest} = props;
             return (
+              // eslint-disable-next-line jsx-a11y/anchor-has-content
               <a className='text-blue-500 hover:underline'
                 {...rest} />
+            );
+          },
+          img(props) {
+            const {...rest} = props;
+            return (
+              <div className='w-full h-full p-5'>
+                <img className='w-full h-full rounded' {...rest} alt={props.alt} />
+              </div>
             );
           }
         }}
