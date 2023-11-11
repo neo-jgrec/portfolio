@@ -15,19 +15,37 @@ function ProjectCard({ project }) {
   const [languagePercentage, setLanguagePercentage] = React.useState(null);
 
   useEffect(() => {
-    fetch(project.github)
+    fetch(project.github, {
+      headers: {
+          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          })
+        }
+      })
       .then((response) => response.json())
       .then((data) => setApiData(data));
   }, [project.github]);
 
   useEffect(() => {
-    fetch(project.github + '/contributors')
+    fetch(project.github + '/contributors', {
+      headers: {
+          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          })
+        }
+      })
       .then((response) => response.json())
       .then((data) => setContributorCount(data.length));
   }, [project.github]);
 
   useEffect(() => {
-    fetch(project.github + '/languages')
+    fetch(project.github + '/languages', {
+      headers: {
+          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          })
+        }
+      })
       .then((response) => response.json())
       .then((data) => {
         let total = 0;

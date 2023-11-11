@@ -38,7 +38,13 @@ function ProjectPage() {
 
   React.useEffect(() => {
     if (project) {
-      fetch(project.github)
+      fetch(project.github, {
+        headers: {
+          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          })
+        }
+      })
         .then((response) => response.json())
         .then((data) => setApiData(data));
     }
@@ -46,7 +52,13 @@ function ProjectPage() {
 
   React.useEffect(() => {
     if (project) {
-      fetch(project.github + '/contributors')
+      fetch(project.github + '/contributors', {
+        headers: {
+          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          })
+        }
+      })
         .then((response) => response.json())
         .then((data) => setContributors(data));
     }
