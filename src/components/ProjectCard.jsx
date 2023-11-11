@@ -63,12 +63,18 @@ function ProjectCard({ project, setLoaded }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiData?.description]);
 
-  if (!apiData || !contributorCount || !languagePercentage) {
-    setTimeout(() => setLoaded(3), 10000);
+  useEffect(() => {
+    let timeoutId;
+
+    if (apiData && contributorCount && languagePercentage)
+      setLoaded(true);
+    if (!apiData || !contributorCount || !languagePercentage)
+      timeoutId = setTimeout(() => setLoaded(3), 10000);
+    return () => clearTimeout(timeoutId);
+  }, [apiData, contributorCount, languagePercentage, setLoaded]);
+
+  if (!apiData || !contributorCount || !languagePercentage)
     return null;
-  } else {
-    setLoaded(true);
-  }
 
   return (
     <a className="p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out aspect-w-2 aspect-h-1" href={'/project/' + project.dataName}>
