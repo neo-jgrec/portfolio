@@ -134,10 +134,11 @@ function Projects() {
     <div className="items-center justify-between w-full max-w-6xl px-4 mx-auto md:px-8">
       <h1 className="text-4xl font-bold text-white my-5">Projects</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {projectsArray.map((project) => {
+          {projectsArray.slice(0, 4).map((project) => {
               return <ProjectCard project={project} key={project.name} />;
           })}
       </div>
+      <a href="/projects" className="px-3 py-2 font-medium text-gray-400 hover:text-primary transition-colors duration-100 ease-in-out">See more projects</a>
     </div>
   );
 }
