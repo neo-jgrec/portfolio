@@ -20,6 +20,13 @@ const projects = {
         branch : "main",
         github : "https://api.github.com/repos/neo-jgrec/42sh",
     },
+    portfolio : {
+        name : "Portfolio",
+        dataName : "portfolio",
+        owner : "neo-jgrec",
+        branch : "main",
+        github : "https://api.github.com/repos/neo-jgrec/portfolio",
+    },
 };
 
 export default projects;
