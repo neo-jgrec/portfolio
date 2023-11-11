@@ -13,6 +13,13 @@ const projects = {
         branch : "main",
         github : "https://api.github.com/repos/neo-jgrec/corewar",
     },
+    "42sh" : {
+        name : "42sh",
+        dataName : "42sh",
+        owner : "neo-jgrec",
+        branch : "main",
+        github : "https://api.github.com/repos/neo-jgrec/42sh",
+    },
 };
 
 export default projects;
