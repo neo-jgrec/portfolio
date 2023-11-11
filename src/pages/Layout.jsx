@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header, Footer } from '../components';
 import PropTypes from 'prop-types';
+import { Analytics } from '@vercel/analytics/react';
 
 const Layout = ({ children }) => {
   Layout.propTypes = {
@@ -14,6 +15,7 @@ const Layout = ({ children }) => {
           <br /> <br />
           <div className='flex flex-col flex-1 px-5 lg:px-36 py-10 z-[2]'>
               {children}
+              <Analytics />
           </div>
           <Footer />
       </div>
