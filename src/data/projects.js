@@ -27,6 +27,13 @@ const projects = {
         branch : "main",
         github : "https://api.github.com/repos/neo-jgrec/portfolio",
     },
+    dante : {
+        name : "Dante",
+        dataName : "dante",
+        owner : "neo-jgrec",
+        branch : "main",
+        github : "https://api.github.com/repos/neo-jgrec/dante",
+    },
 };
 
 export default projects;
