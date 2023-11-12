@@ -9,11 +9,25 @@ import {
 function ProjectCard({ project, setLoaded }) {
   const maxDescriptionLength = 70;
 
-  const [apiData, setApiData] = React.useState(null);
-  const [contributorCount, setContributorCount] = React.useState(null);
-  const [languagePercentage, setLanguagePercentage] = React.useState(null);
+  const [allDataMerge, setAllDataMerge] = React.useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
+
+  const [apiData, setApiData] = React.useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
+  const [contributors, setContributors] = React.useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.contributors || null);
+  const [languagePercentage, setLanguagePercentage] = React.useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.languagePercentage || null);
 
   useEffect(() => {
+    if (apiData && contributors && languagePercentage)
+      setAllDataMerge({ ...apiData, contributors, languagePercentage });
+  }, [apiData, contributors, languagePercentage]);
+
+  useEffect(() => {
+    sessionStorage.setItem(project.dataName, JSON.stringify(allDataMerge));
+  }, [allDataMerge, project.dataName]);
+
+  useEffect(() => {
+    if (apiData)
+      return;
+
     fetch(project.github, {
       headers: {
         ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
@@ -26,6 +40,9 @@ function ProjectCard({ project, setLoaded }) {
   }, [project.github]);
 
   useEffect(() => {
+    if (contributors)
+      return;
+
     fetch(project.github + '/contributors', {
       headers: {
         ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
@@ -34,10 +51,13 @@ function ProjectCard({ project, setLoaded }) {
       }
     })
       .then((response) => response.json())
-      .then((data) => setContributorCount(data.length));
+      .then((data) => setContributors(data));
   }, [project.github]);
 
   useEffect(() => {
+    if (languagePercentage)
+      return;
+
     fetch(project.github + '/languages', {
       headers: {
         ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
@@ -66,14 +86,14 @@ function ProjectCard({ project, setLoaded }) {
   useEffect(() => {
     let timeoutId;
 
-    if (apiData && contributorCount && languagePercentage)
+    if (apiData && contributors && languagePercentage)
       setLoaded(true);
-    if (!apiData || !contributorCount || !languagePercentage)
+    if (!apiData || !contributors || !languagePercentage)
       timeoutId = setTimeout(() => setLoaded(3), 10000);
     return () => clearTimeout(timeoutId);
-  }, [apiData, contributorCount, languagePercentage, setLoaded]);
+  }, [apiData, contributors, languagePercentage, setLoaded]);
 
-  if (!apiData || !contributorCount || !languagePercentage)
+  if (!apiData || !contributors || !languagePercentage)
     return null;
 
   return (
@@ -97,40 +117,43 @@ function ProjectCard({ project, setLoaded }) {
             <div className="flex flex-row justify-between px-4">
               <p className="font-bold text-xl text-blue-500 items-center flex">
                 <UsersIcon className="w-6 h-6 inline-block mr-2" />
-                {contributorCount}
+                {contributors.length || 0}
               </p>
 
               <p className="font-bold text-xl text-green-500 items-center flex">
                 <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" className="w-6 h-6 inline-block mr-2 fill-green-500">
                   <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"></path><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0ZM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0Z"></path>
                 </svg>
-                {apiData.open_issues_count}
+                {apiData.open_issues_count || 0}
               </p>
 
               <p className="font-bold text-xl text-yellow-400 items-center flex">
                 <StarIcon className="w-6 h-6 inline-block mr-2" />
-                {apiData.stargazers_count}
+                {apiData.stargazers_count || 0}
               </p>
 
               <p className="font-bold text-xl text-red-500 items-center flex">
                 <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" className="w-6 h-6 inline-block mr-2 fill-red-500">
                   <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"></path>
                 </svg>
-                {apiData.forks_count}
+                {apiData.forks_count || 0}
               </p>
             </div>
           </div>
         </div>
-
-        <p className="text-lg font-bold text-white mt-4">Most used language : {Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0]}</p>
-        <div className="flex flex-row h-2 mt-2 rounded-lg">
-          {Object.entries(languagePercentage).map(([language, percentage]) => (
-            <div key={language} className={`h-full tooltip ${language === Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0] ? 'rounded-l-lg' : language === Object.entries(languagePercentage).sort((a, b) => a[1] - b[1])[0][0] ? 'rounded-r-lg' : 'rounded-none'}`}
-              style={{ width: percentage * 100 + '%', backgroundColor: languageColors[language] }}>
-              <p className="tooltiptext">{language}</p>
+        {languagePercentage &&
+          <>
+            <p className="text-lg font-bold text-white mt-4">Most used language : {Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0]}</p>
+            <div className="flex flex-row h-2 mt-2 rounded-lg">
+              {Object.entries(languagePercentage).map(([language, percentage]) => (
+                <div key={language} className={`h-full tooltip ${language === Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0] ? 'rounded-l-lg' : language === Object.entries(languagePercentage).sort((a, b) => a[1] - b[1])[0][0] ? 'rounded-r-lg' : 'rounded-none'}`}
+                  style={{ width: percentage * 100 + '%', backgroundColor: languageColors[language] }}>
+                  <p className="tooltiptext">{language}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </>
+        }
       </div>
     </a>
   );
