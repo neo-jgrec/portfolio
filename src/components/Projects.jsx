@@ -15,7 +15,7 @@ function Projects() {
               return <ProjectCard project={project} key={project.name} setLoaded={setLoaded} />;
           })}
       </div>
-      {loaded === true && <a href="/projects" className="px-3 py-2 font-medium text-xl text-primary hover:text-blue-400 transition duration-100 ease-in-out">See more projects</a>}
+      {loaded === true && <a href="/projects" className="px-8 py-2 font-medium text-xl text-primary hover:text-blue-400 transition duration-100 ease-in-out">See more projects →</a>}
       {loaded === false &&
         <div className="flex flex-col items-center justify-center w-full h-full">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
