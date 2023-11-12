@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import projects from "../data/projects";
 import Layout from "./Layout";
@@ -18,20 +18,35 @@ function ProjectPage() {
 
   const [markdown, setMarkdown] = React.useState('');
   const [project, setProject] = React.useState(null);
-  const [apiData, setApiData] = React.useState(null);
-  const [contributors, setContributors] = React.useState(null);
 
-  React.useEffect(() => {
+  const [allDataMerge, setAllDataMerge] = React.useState(JSON.parse(sessionStorage.getItem(project?.dataName) || null));
+
+  const [apiData, setApiData] = React.useState(sessionStorage.getItem(projectName) ? JSON.parse(sessionStorage.getItem(projectName)) : null);
+  const [contributors, setContributors] = React.useState(JSON.parse(sessionStorage.getItem(projectName) || null)?.contributors || null);
+
+  useEffect(() => {
+    if (apiData && contributors)
+      setAllDataMerge({ ...apiData, contributors });
+  }, [apiData, contributors]);
+
+  useEffect(() => {
+    if (!project || !project.dataName)
+      return;
+
+    sessionStorage.setItem(project.dataName, JSON.stringify(allDataMerge));
+  }, [allDataMerge, project?.dataName]);
+
+  useEffect(() => {
     if (project)
       document.title = project.name + ' - Jean-Yanis JEFFROY';
   }, [project]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const project = Object.values(projects).find(project => project.dataName === projectName) || Object.values(contributions).find(project => project.name === projectName);
     setProject(project);
   }, [projectName]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (project) {
       fetch(`https://raw.githubusercontent.com/${project.owner}/${project.dataName}/${project.branch}/README.md`)
         .then(res => res.text())
@@ -39,7 +54,10 @@ function ProjectPage() {
     }
   }, [project]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (apiData)
+      return;
+
     if (project) {
       fetch(project.github, {
         headers: {
@@ -53,7 +71,10 @@ function ProjectPage() {
     }
   }, [project]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    if (contributors)
+      return;
+
     if (project) {
       fetch(project.github + '/contributors', {
         headers: {
@@ -69,9 +90,6 @@ function ProjectPage() {
 
   if (!project)
     return <NotFound />;
-
-  if (!apiData || !contributors)
-    return null;
 
   return (
     <Layout>
@@ -177,7 +195,7 @@ function ProjectPage() {
         <div className="flex flex-row justify-between px-4">
           <a
             className="flex flex-row items-center p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out"
-            href={apiData?.html_url}
+            href={`https://github.com/${project.owner}/${project.dataName}`}
             target="_blank" rel="noreferrer"
           >
             <img src={logoGh} alt="GitHub Logo" className="w-6 h-6 mr-2" />
