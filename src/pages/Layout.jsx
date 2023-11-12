@@ -12,8 +12,7 @@ const Layout = ({ children, showHeader = true, showFooter = true }) => {
           {showHeader && <Header />}
           <div className='pointer-events-none opacity-70 bg-blend-normal
           bg-noisy-texture fixed top-0 left-0 z-[1] h-screen w-screen'/>
-          <br /> <br />
-          <div className='flex flex-col flex-1 px-5 lg:px-36 py-10 z-[2]'>
+          <div className='flex flex-col flex-1 px-5 lg:px-36 py-10 z-[2] pt-20'>
               {children}
               <Analytics />
           </div>
