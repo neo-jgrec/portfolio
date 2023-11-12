@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { languageColors } from "../utils";
 import {
   ArrowTopRightOnSquareIcon,
@@ -9,11 +9,58 @@ import {
 function ProjectCard({ project, setLoaded }) {
   const maxDescriptionLength = 70;
 
-  const [allDataMerge, setAllDataMerge] = React.useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
+  const [allDataMerge, setAllDataMerge] = useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
 
-  const [apiData, setApiData] = React.useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
-  const [contributors, setContributors] = React.useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.contributors || null);
-  const [languagePercentage, setLanguagePercentage] = React.useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.languagePercentage || null);
+  const [apiData, setApiData] = useState(sessionStorage.getItem(project.dataName) ? JSON.parse(sessionStorage.getItem(project.dataName)) : null);
+  const [contributors, setContributors] = useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.contributors || null);
+  const [languagePercentage, setLanguagePercentage] = useState(JSON.parse(sessionStorage.getItem(project.dataName) || null)?.languagePercentage || null);
+
+  const glossyRef = useRef(null);
+  const [lightPosition, setLightPosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const boundingRect = glossyRef.current.getBoundingClientRect();
+      const mouseX = e.clientX - boundingRect.left;
+      const mouseY = e.clientY - boundingRect.top;
+
+      setLightPosition({ x: mouseX, y: mouseY });
+    };
+
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+      glossyRef.current.addEventListener('mousemove', handleMouseMove);
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+      glossyRef.current.removeEventListener('mousemove', handleMouseMove);
+    };
+
+    const interval = setInterval(() => {
+      try {
+        glossyRef.current.addEventListener('mouseenter', handleMouseEnter);
+        glossyRef.current.addEventListener('mouseleave', handleMouseLeave);
+        clearInterval(interval);
+      } catch (e) {
+        // console.log(e);
+      }
+    }, 100);
+
+    return () => {
+      const interval = setInterval(() => {
+        try {
+          glossyRef.current.removeEventListener('mouseenter', handleMouseEnter);
+          glossyRef.current.removeEventListener('mouseleave', handleMouseLeave);
+          glossyRef.current.removeEventListener('mousemove', handleMouseMove);
+          clearInterval(interval);
+        } catch (e) {
+          // console.log(e);
+        }
+      }, 100);
+    };
+  }, []);
 
   useEffect(() => {
     if (apiData && contributors && languagePercentage)
@@ -97,7 +144,18 @@ function ProjectCard({ project, setLoaded }) {
     return null;
 
   return (
-    <a className="p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out aspect-w-2 aspect-h-1" href={'/project/' + project.dataName}>
+    <a
+      ref={glossyRef}
+      className="p-4 rounded-lg shadow-lg bg-stone-50 bg-opacity-[7%] aspect-w-2 aspect-h-1 border-[1px] border-gray-700 border-opacity-50"
+      style={{
+        backgroundSize: '100% 100%',
+        backgroundImage: isHovered
+          ? `radial-gradient(circle at ${lightPosition.x}px ${lightPosition.y}px, rgba(255, 255, 255, 7%) 1%, rgba(0, 0, 0, 0%) 99%)`
+          : 'none',
+        transition: 'background 1s ease-in-out'
+      }}
+      href={'/project/' + project.dataName}
+    >
 
       <div className="h-full w-full flex flex-col justify-between">
         <div className="grid grid-cols-3 items-center">
