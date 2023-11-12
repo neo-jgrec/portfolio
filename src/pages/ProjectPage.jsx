@@ -139,6 +139,10 @@ function ProjectPage() {
               return (
                 <img className='w-72' {...rest} alt={props.alt} />
               );
+            else if (props.alt === 'badge')
+              return (
+                <img className='w-32' {...rest} alt={props.alt} />
+              );
             else
               return (
                 <div className='w-full h-full p-5'>
