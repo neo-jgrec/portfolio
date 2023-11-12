@@ -6,8 +6,10 @@ import Contributions from "../components/Contributions";
 function Home() {
   return (
     <Layout>
-      <Projects />
-      <Contributions />
+      <div className="flex flex-col items-center justify-center gap-y-12">
+        <Projects />
+        <Contributions />
+      </div>
     </Layout>
   );
 }
