@@ -75,118 +75,120 @@ function ProjectPage() {
 
   return (
     <Layout>
-      <Markdown
-        className="markdown"
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
-        children={markdown}
-        components={{
-          code(props) {
-            const {children, className, node, ...rest} = props
-            const match = /language-(\w+)/.exec(className || '')
-            return match ? (
-              <SyntaxHighlighter
-                {...rest}
-                PreTag="div"
-                children={String(children).replace(/\n$/, '')}
-                language={match[1]}
-                style={Theme}
-              />
-            ) : (
-              <code {...rest} className={`${className} text-white bg-gray-800 rounded p-1`} inline={children.toString()}>
-                {children}
-              </code>
-            )
-          },
-          table(props) {
-            const {...rest} = props;
-            return (
-              <table className='table-auto border-collapse' {...rest} />
-            );
-          },
-          th(props) {
-            const {...rest} = props;
-            return (
-              <th className='px-3 py-2 text-left border-b border-gray-600'
-                {...rest} />
-            );
-          },
-          td(props) {
-            const {...rest} = props;
-            return (
-              <td className='px-3 py-2 border-b border-gray-600'
-                {...rest} />
-            );
-          },
-          tr(props) {
-            const {...rest} = props;
-            return (
-              <tr className='px-3 py-2 border-b border-gray-600'
-                {...rest} />
-            );
-          },
-          a(props) {
-            const {...rest} = props;
-            return (
-              // eslint-disable-next-line jsx-a11y/anchor-has-content
-              <a className='text-blue-500 hover:underline'
-                {...rest} />
-            );
-          },
-          img(props) {
-            const {...rest} = props;
-            if (props.alt === 'RepoCard')
+      <div className="items-center justify-between w-full max-w-6xl px-4 mx-auto md:px-8">
+        <Markdown
+          className="markdown"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+          children={markdown}
+          components={{
+            code(props) {
+              const {children, className, node, ...rest} = props
+              const match = /language-(\w+)/.exec(className || '')
+              return match ? (
+                <SyntaxHighlighter
+                  {...rest}
+                  PreTag="div"
+                  children={String(children).replace(/\n$/, '')}
+                  language={match[1]}
+                  style={Theme}
+                />
+              ) : (
+                <code {...rest} className={`${className} text-white bg-gray-800 rounded p-1`} inline={children.toString()}>
+                  {children}
+                </code>
+              )
+            },
+            table(props) {
+              const {...rest} = props;
               return (
-                <img className='w-72' {...rest} alt={props.alt} />
+                <table className='table-auto border-collapse' {...rest} />
               );
-            else if (props.alt === 'badge')
+            },
+            th(props) {
+              const {...rest} = props;
               return (
-                <img className='w-32' {...rest} alt={props.alt} />
+                <th className='px-3 py-2 text-left border-b border-gray-600'
+                  {...rest} />
               );
-            else
+            },
+            td(props) {
+              const {...rest} = props;
               return (
-                <div className='w-full h-full p-5'>
-                  <img className='w-full h-full rounded' {...rest} alt={props.alt} />
-                </div>
-            );
-          }
-        }}
-      />
+                <td className='px-3 py-2 border-b border-gray-600'
+                  {...rest} />
+              );
+            },
+            tr(props) {
+              const {...rest} = props;
+              return (
+                <tr className='px-3 py-2 border-b border-gray-600'
+                  {...rest} />
+              );
+            },
+            a(props) {
+              const {...rest} = props;
+              return (
+                // eslint-disable-next-line jsx-a11y/anchor-has-content
+                <a className='text-blue-500 hover:underline'
+                  {...rest} />
+              );
+            },
+            img(props) {
+              const {...rest} = props;
+              if (props.alt === 'RepoCard')
+                return (
+                  <img className='w-72' {...rest} alt={props.alt} />
+                );
+              else if (props.alt === 'badge')
+                return (
+                  <img className='w-32' {...rest} alt={props.alt} />
+                );
+              else
+                return (
+                  <div className='w-full h-full p-5'>
+                    <img className='w-full h-full rounded' {...rest} alt={props.alt} />
+                  </div>
+              );
+            }
+          }}
+        />
 
-      <br /> <br />
+        <br /> <br />
 
-      <div className="flex flex-row justify-between items-center px-4 lg:px-52">
-        {contributors && contributors.length > 1 && contributors.map((contributor, index) => (
+        <div className="flex flex-row justify-between items-center px-4 lg:px-52">
+          {contributors && contributors.length > 1 && contributors.map((contributor, index) => (
+            <a
+              key={index}
+              className="flex flex-col items-center p-4"
+              href={contributor.html_url}
+              target="_blank" rel="noreferrer"
+            >
+              <img src={contributor.avatar_url} alt={contributor.login} className="w-16 h-16 mr-2 rounded-full object-cover" style={{ imageRendering: 'pixelated' }} />
+              <p className="text-lg font-bold text-white items-center">
+                {contributor.login}
+              </p>
+            </a>
+          ))}
+        </div>
+
+        <br /> <br />
+
+        <div className="flex flex-row justify-between px-4">
           <a
-            key={index}
-            className="flex flex-col items-center p-4"
-            href={contributor.html_url}
+            className="flex flex-row items-center p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out"
+            href={apiData?.html_url}
             target="_blank" rel="noreferrer"
           >
-            <img src={contributor.avatar_url} alt={contributor.login} className="w-16 h-16 mr-2 rounded-full object-cover" style={{ imageRendering: 'pixelated' }} />
-            <p className="text-lg font-bold text-white items-center">
-              {contributor.login}
+            <img src={logoGh} alt="GitHub Logo" className="w-6 h-6 mr-2" />
+            <p className="text-xl font-bold text-white items-center">
+              {project.name} repository
             </p>
           </a>
-        ))}
-      </div>
-
-      <br /> <br />
-
-      <div className="flex flex-row justify-between px-4">
-        <a
-          className="flex flex-row items-center p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out"
-          href={apiData?.html_url}
-          target="_blank" rel="noreferrer"
-        >
-          <img src={logoGh} alt="GitHub Logo" className="w-6 h-6 mr-2" />
-          <p className="text-xl font-bold text-white items-center">
-            {project.name} repository
+          <p className="font-bold text-xl text-white items-center flex">
+            Creation of the repository : {new Date(apiData?.created_at).toLocaleDateString('en-BR', { year: 'numeric', month: 'long', day: 'numeric' })}
           </p>
-        </a>
-        <p className="font-bold text-xl text-white items-center flex">
-          Creation of the repository : {new Date(apiData?.created_at).toLocaleDateString('en-BR', { year: 'numeric', month: 'long', day: 'numeric' })}
-        </p>
+        </div>
       </div>
     </Layout>
   );
