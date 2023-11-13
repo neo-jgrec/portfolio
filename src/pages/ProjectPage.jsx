@@ -164,7 +164,7 @@ function ProjectPage() {
                 );
               else
                 return (
-                  <div className='w-full h-full p-5'>
+                  <div className='w-full h-full py-5'>
                     <img className='w-full h-full rounded' {...rest} alt={props.alt} />
                   </div>
               );
@@ -174,7 +174,7 @@ function ProjectPage() {
 
         <br /> <br />
 
-        <div className="flex flex-row justify-between items-center px-4 lg:px-52">
+        <div className="justify-between items-center px-4 lg:px-52 gap-1 grid grid-cols-2 md:grid-cols-4">
           {contributors && contributors.length > 1 && contributors.map((contributor, index) => (
             <a
               key={index}
@@ -183,7 +183,7 @@ function ProjectPage() {
               target="_blank" rel="noreferrer"
             >
               <img src={contributor.avatar_url} alt={contributor.login} className="w-16 h-16 mr-2 rounded-full object-cover" style={{ imageRendering: 'pixelated' }} />
-              <p className="text-lg font-bold text-white items-center">
+              <p className="sm:text-lg text-sm font-bold text-white items-center">
                 {contributor.login}
               </p>
             </a>
@@ -192,7 +192,7 @@ function ProjectPage() {
 
         <br /> <br />
 
-        <div className="flex flex-row justify-between px-4">
+        <div className="flex flex-col items-center justify-center gap-y-12">
           <a
             className="flex flex-row items-center p-4 rounded-lg shadow-lg hover:bg-stone-50 hover:bg-opacity-5 transition duration-300 ease-in-out"
             href={`https://github.com/${project.owner}/${project.dataName}`}

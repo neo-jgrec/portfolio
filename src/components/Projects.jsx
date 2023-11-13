@@ -10,12 +10,12 @@ function Projects() {
   return (
     <div className="items-center justify-between w-full max-w-6xl px-4 mx-auto md:px-8">
       <h1 className="text-4xl font-bold text-white my-5">Notable Projects</h1>
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
           {projectsArray.slice(0, 4).map((project) => {
               return <ProjectCard project={project} key={project.name} setLoaded={setLoaded} />;
           })}
       </div>
-      {loaded === true && <a href="/projects" className="px-8 py-2 font-medium text-xl text-primary hover:text-blue-400 transition duration-100 ease-in-out">See more projects →</a>}
+      {loaded === true && <a href="/projects" className="px-8 py-2 font-medium lg:text-xl text-lg text-primary hover:text-blue-400 transition duration-100 ease-in-out">See more projects →</a>}
       {loaded === false &&
         <div className="flex flex-col items-center justify-center w-full h-full">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
