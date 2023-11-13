@@ -149,7 +149,7 @@ function ProjectCard({ project, setLoaded }) {
   return (
     <a
       ref={glossyRef}
-      className="p-4 rounded-lg shadow-lg bg-stone-50 bg-opacity-[7%] aspect-w-2 aspect-h-1 border-[1px] border-gray-700 border-opacity-50"
+      className="py-4 rounded-lg shadow-lg bg-stone-50 bg-opacity-[7%] aspect-w-2 aspect-h-1 border-[1px] border-gray-700 border-opacity-50"
       style={{
         backgroundSize: '100% 100%',
         backgroundImage: isHovered
@@ -160,7 +160,7 @@ function ProjectCard({ project, setLoaded }) {
       href={'/project/' + project.dataName}
     >
 
-      <div className="h-full w-full flex flex-col justify-between">
+      <div className="h-full w-full flex flex-col justify-between px-4">
         <div className="grid lg:grid-cols-3 items-center">
 
           <div className="col-span-1 h-32 w-32">
@@ -204,20 +204,20 @@ function ProjectCard({ project, setLoaded }) {
             </div>
           </div>
         </div>
-        {(languagePercentage) &&
-          <>
-            <p className="text-lg font-bold text-white mt-4">Most used language : {Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0]}</p>
-              <div className="flex flex-row h-2 mt-2 rounded-lg invisible sm:visible">
-                {Object.entries(languagePercentage).map(([language, percentage]) => (
-                  <div key={language} className={`h-full tooltip ${language === Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0] ? 'rounded-l-lg' : language === Object.entries(languagePercentage).sort((a, b) => a[1] - b[1])[0][0] ? 'rounded-r-lg' : 'rounded-none'}`}
-                    style={{ width: percentage * 100 + '%', backgroundColor: languageColors[language] }}>
-                    <p className="tooltiptext">{language}</p>
-                  </div>
-                ))}
-              </div>
-          </>
-        }
       </div>
+      {(languagePercentage) &&
+      <div className="flex flex-row h-2 mt-2 rounded-lg">
+        {Object.entries(languagePercentage).map(([language, percentage]) => (
+          <div key={language} className={`h-full tooltip ${language === Object.entries(languagePercentage).sort((a, b) => b[1] - a[1])[0][0] ? 'rounded-bl-lg' : language === Object.entries(languagePercentage).sort((a, b) => a[1] - b[1])[0][0] ? 'rounded-br-lg' : 'rounded-none'}`}
+            style={{ width: percentage * 100 + '%', backgroundColor: languageColors[language] }}>
+            <div className="tooltiptext text-sm">
+              <p className="text-white">{language}</p>
+              <p className="text-gray-400">{(percentage * 100).toFixed(2)}%</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    }
     </a>
   );
 }

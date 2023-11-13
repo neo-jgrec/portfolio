@@ -16,7 +16,7 @@ module.exports = plugin(({ addUtilities, theme, variants }) => {
       borderRadius: '6px',
       position: 'absolute',
       zIndex: '1',
-      top: '-500%',
+      top: '-700%',
       left: '50%',
       transform: 'translateX(-50%)',
     },
