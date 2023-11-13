@@ -10,7 +10,7 @@ function Projects() {
   return (
     <div className="items-center justify-between w-full max-w-6xl px-4 mx-auto md:px-8">
       <h1 className="text-4xl font-bold text-white my-5">Notable Projects</h1>
-      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 my-5">
           {projectsArray.slice(0, 4).map((project) => {
               return <ProjectCard project={project} key={project.name} setLoaded={setLoaded} />;
           })}
