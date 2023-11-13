@@ -164,9 +164,7 @@ function ProjectPage() {
                 );
               else
                 return (
-                  <div className='w-full h-full py-5'>
-                    <img className='w-full h-full rounded' {...rest} alt={props.alt} />
-                  </div>
+                  <img className='w-full h-full rounded-2xl' {...rest} alt={props.alt} style={{ padding: '0.5rem' }} />
               );
             }
           }}
