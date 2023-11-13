@@ -20,6 +20,8 @@ function ProjectCard({ project, setLoaded }) {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
+    let glossy = null;
+
     const handleMouseMove = (e) => {
       const boundingRect = glossyRef.current.getBoundingClientRect();
       const mouseX = e.clientX - boundingRect.left;
@@ -42,6 +44,7 @@ function ProjectCard({ project, setLoaded }) {
       try {
         glossyRef.current.addEventListener('mouseenter', handleMouseEnter);
         glossyRef.current.addEventListener('mouseleave', handleMouseLeave);
+        glossy = glossyRef.current;
         clearInterval(interval);
       } catch (e) {
         // console.log(e);
@@ -51,9 +54,9 @@ function ProjectCard({ project, setLoaded }) {
     return () => {
       const interval = setInterval(() => {
         try {
-          glossyRef.current.removeEventListener('mouseenter', handleMouseEnter);
-          glossyRef.current.removeEventListener('mouseleave', handleMouseLeave);
-          glossyRef.current.removeEventListener('mousemove', handleMouseMove);
+          glossy.removeEventListener('mouseenter', handleMouseEnter);
+          glossy.removeEventListener('mouseleave', handleMouseLeave);
+          glossy.removeEventListener('mousemove', handleMouseMove);
           clearInterval(interval);
         } catch (e) {
           // console.log(e);
@@ -84,7 +87,7 @@ function ProjectCard({ project, setLoaded }) {
     })
       .then((response) => response.json())
       .then((data) => setApiData(data));
-  }, [project.github]);
+  }, [project.github, apiData]);
 
   useEffect(() => {
     if (contributors)
@@ -99,7 +102,7 @@ function ProjectCard({ project, setLoaded }) {
     })
       .then((response) => response.json())
       .then((data) => setContributors(data));
-  }, [project.github]);
+  }, [project.github, contributors]);
 
   useEffect(() => {
     if (languagePercentage)
@@ -122,7 +125,7 @@ function ProjectCard({ project, setLoaded }) {
           languagePercentage[language] = data[language] / total;
         setLanguagePercentage(languagePercentage);
       });
-  }, [project.github]);
+  }, [project.github, languagePercentage]);
 
   useEffect(() => {
     if (apiData && apiData.description && apiData.description.length > maxDescriptionLength)

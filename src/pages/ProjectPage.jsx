@@ -34,7 +34,7 @@ function ProjectPage() {
       return;
 
     sessionStorage.setItem(project.dataName, JSON.stringify(allDataMerge));
-  }, [allDataMerge, project?.dataName]);
+  }, [allDataMerge, project]);
 
   useEffect(() => {
     if (project)
@@ -69,7 +69,7 @@ function ProjectPage() {
         .then((response) => response.json())
         .then((data) => setApiData(data));
     }
-  }, [project]);
+  }, [project, apiData]);
 
   useEffect(() => {
     if (contributors)
@@ -86,7 +86,7 @@ function ProjectPage() {
         .then((response) => response.json())
         .then((data) => setContributors(data));
     }
-  }, [project]);
+  }, [project, contributors]);
 
   if (!project)
     return <NotFound />;
