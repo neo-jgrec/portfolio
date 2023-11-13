@@ -149,16 +149,16 @@ function ProjectCard({ project, setLoaded }) {
   return (
     <a
       ref={glossyRef}
-      className="py-4 rounded-lg shadow-lg bg-stone-50 bg-opacity-[7%] aspect-w-2 aspect-h-1 border-[1px] border-gray-700 border-opacity-50"
-      style={{
-        backgroundSize: '100% 100%',
-        backgroundImage: isHovered
-          ? `radial-gradient(circle at ${lightPosition.x}px ${lightPosition.y}px, rgba(255, 255, 255, 7%) 1%, rgba(0, 0, 0, 0%) 99%)`
-          : 'none',
-        transition: 'background 1s ease-in-out'
-      }}
+      className="py-4 rounded-lg shadow-lg bg-stone-50 bg-opacity-[7%] aspect-w-2 aspect-h-1 border-[1px] border-gray-700 border-opacity-50
+      transition-all duration-500 ease-in-out group relative"
       href={'/project/' + project.dataName}
     >
+
+    <div className="h-full w-full absolute top-0 left-0 rounded-lg transition-all duration-500 ease-in-out group-hover:opacity-100 opacity-0"
+      style={{
+        backgroundSize: '100% 100%',
+        backgroundImage: `radial-gradient(circle at ${lightPosition.x}px ${lightPosition.y}px, rgba(255, 255, 255, 7%) 1%, rgba(0, 0, 0, 0%) 99%)`
+      }}></div>
 
       <div className="h-full w-full flex flex-col justify-between px-4">
         <div className="grid lg:grid-cols-3 items-center">
