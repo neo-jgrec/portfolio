@@ -27,6 +27,13 @@ const projects = {
         branch : "main",
         github : "https://api.github.com/repos/neo-jgrec/portfolio",
     },
+    bsq : {
+        name : "BSQ",
+        dataName : "bsq",
+        owner : "neo-jgrec",
+        branch : "main",
+        github : "https://api.github.com/repos/neo-jgrec/bsq",
+    },
     dante : {
         name : "Dante",
         dataName : "dante",
