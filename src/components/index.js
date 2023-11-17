@@ -4,6 +4,7 @@ import Projects from "./Projects";
 import ProjectCard from "./ProjectCard";
 import Contributions from "./Contributions";
 import Presentation from "./Presentation";
+import Drawer from "./Drawer";
 
 export {
     Header,
@@ -11,5 +12,6 @@ export {
     Projects,
     ProjectCard,
     Contributions,
-    Presentation
+    Presentation,
+    Drawer
 }
