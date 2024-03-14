@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header, Footer } from '../components';
 import PropTypes from 'prop-types';
-import { Analytics } from '@vercel/analytics/react';
 
 const Layout = ({ children, showHeader = true, showFooter = true }) => {
   Layout.propTypes = {
@@ -14,7 +13,6 @@ const Layout = ({ children, showHeader = true, showFooter = true }) => {
         bg-noisy-texture fixed top-0 left-0 z-[1] h-screen w-screen'/>
         <div className='flex flex-col flex-1 px-5 lg:px-36 py-10 z-[2] pt-20'>
           {children}
-          <Analytics />
         </div>
         {showFooter && <Footer />}
       </div>
