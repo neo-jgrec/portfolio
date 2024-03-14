@@ -61,8 +61,8 @@ function ProjectPage() {
     if (project) {
       fetch(project.github, {
         headers: {
-          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
-            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          ...(import.meta.env.VITE_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${import.meta.env.VITE_GITHUB_API_TOKEN}`
           })
         }
       })
@@ -78,8 +78,8 @@ function ProjectPage() {
     if (project) {
       fetch(project.github + '/contributors', {
         headers: {
-          ...(process.env.REACT_APP_GITHUB_API_TOKEN && {
-            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_API_TOKEN}`
+          ...(import.meta.env.VITE_GITHUB_API_TOKEN && {
+            Authorization: `Bearer ${import.meta.env.VITE_GITHUB_API_TOKEN}`
           })
         }
       })
